@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const budgetRoute = require("./routes/budgets");
 const userRoute = require("./routes/users");
 const goalRoute = require("./routes/goals");
+const debtRoute = require("./routes/debts");
 const app = express();
 
 app.use(express.json());
@@ -17,7 +18,8 @@ app.use((req, res, next) => {
 // Routes
 app.use("/api/budget", budgetRoute);
 app.use("/api/users", userRoute);
-app.use("/api/goal/", goalRoute);
+app.use("/api/goal", goalRoute);
+app.use("/api/debt", debtRoute);
 // DB connection
 mongoose
   .connect(process.env.MONGO_URI)
