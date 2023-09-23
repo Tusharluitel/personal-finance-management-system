@@ -21,12 +21,11 @@ const getDebt = async (req, res) => {
 // CREATE a debt
 
 const createDebt = async (req, res) => {
-  const { user, creditor, balance, interestRate, minimumPayment, paymentPlan } =
+  const { creditor, balance, interestRate, minimumPayment, paymentPlan } =
     req.body;
 
   try {
     const debt = await Debt.create({
-      user,
       creditor,
       balance,
       interestRate,

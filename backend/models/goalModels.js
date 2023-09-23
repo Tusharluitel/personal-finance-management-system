@@ -3,11 +3,6 @@ const Schema = mongoose.Schema;
 
 const goalSchema = new Schema(
   {
-    user: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-      required: true,
-    },
     goalName: {
       type: String,
       required: true,

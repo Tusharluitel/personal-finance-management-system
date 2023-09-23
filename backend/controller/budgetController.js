@@ -22,10 +22,9 @@ const getBudget = async (req, res) => {
 
 // POST budget
 const createBudgets = async (req, res) => {
-  const { user, budgetname, totalamount, categories } = req.body;
+  const { budgetname, totalamount, categories } = req.body;
   try {
     const budget = await Budget.create({
-      user,
       budgetname,
       totalamount,
       categories,

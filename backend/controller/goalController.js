@@ -23,11 +23,9 @@ const getGoal = async (req, res) => {
 
 // CREATE a goal
 const createGoal = async (req, res) => {
-  const { user, goalName, targetAmount, currentAmount, priority, dueDate } =
-    req.body;
+  const { goalName, targetAmount, currentAmount, priority, dueDate } = req.body;
   try {
     const goal = await Goal.create({
-      user,
       goalName,
       targetAmount,
       currentAmount,

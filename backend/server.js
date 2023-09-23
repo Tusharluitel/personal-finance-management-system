@@ -1,5 +1,6 @@
 require("dotenv").config();
 const express = require("express");
+const cors = require("cors");
 const mongoose = require("mongoose");
 const budgetRoute = require("./routes/budgets");
 const userRoute = require("./routes/users");
@@ -8,7 +9,7 @@ const debtRoute = require("./routes/debts");
 const app = express();
 
 app.use(express.json());
-
+app.use(cors({ origin: "http://localhost:5173" }));
 // middleware
 app.use((req, res, next) => {
   console.log(req.path, req.method);
