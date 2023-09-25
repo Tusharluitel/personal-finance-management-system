@@ -3,7 +3,8 @@ const mongoose = require("mongoose");
 
 // GET all budget
 const getBudgets = async (req, res) => {
-  const budget = await Budget.find({}).sort({ createdAt: -1 });
+  const user_id = req.user._id;
+  const budget = await Budget.find({ user_id }).sort({ createdAt: -1 });
   res.status(200).json(budget);
 };
 
@@ -22,13 +23,14 @@ const getBudget = async (req, res) => {
 
 // POST budget
 const createBudgets = async (req, res) => {
-  const { user, budgetname, totalamount, categories } = req.body;
+  const { budgetname, totalamount, categories } = req.body;
   try {
+    const user_id = req.user._id;
     const budget = await Budget.create({
-      user,
       budgetname,
       totalamount,
       categories,
+      user_id,
     });
     res.status(200).json(budget);
   } catch (error) {

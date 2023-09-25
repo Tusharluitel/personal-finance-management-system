@@ -1,4 +1,5 @@
 const express = require("express");
+const requireAuth = require("../middleware/requireAuth");
 
 const {
   getBudget,
@@ -9,6 +10,8 @@ const {
 } = require("../controller/budgetController");
 
 const router = express.Router();
+
+router.use(requireAuth);
 
 router.get("/", getBudgets);
 router.get("/:id", getBudget);

@@ -3,11 +3,6 @@ const Schema = mongoose.Schema;
 
 const budgetSchema = new Schema(
   {
-    user: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-      required: true,
-    },
     budgetname: {
       type: String,
       required: true,
@@ -23,7 +18,12 @@ const budgetSchema = new Schema(
         actualExpenses: Number,
       },
     ],
+    user_id: {
+      type: String,
+      required: true,
+    },
   },
+
   { timestamps: true }
 );
 
