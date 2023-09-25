@@ -8,6 +8,7 @@ import {
   ListItemText,
 } from "@mui/material";
 import "tailwindcss/tailwind.css"; // Import Tailwind CSS styles
+import { useAuthContext } from "../../../hooks/useAuthContext";
 
 const BudgetForm = () => {
   const [budgetname, setBudgetname] = useState("");
@@ -16,6 +17,7 @@ const BudgetForm = () => {
   const [allocatedAmount, setAllocatedAmount] = useState("");
   const [actualExpenses, setActualExpenses] = useState("");
   const [categories, setCategories] = useState([]);
+  const { user } = useAuthContext();
 
   const handleCategoryAdd = () => {
     if (categoryname && allocatedAmount && actualExpenses) {
@@ -50,6 +52,7 @@ const BudgetForm = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${user.token}`,
         },
         body: JSON.stringify(budgetData),
       });

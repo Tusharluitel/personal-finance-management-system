@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
+import { useAuthContext } from "../../../hooks/useAuthContext";
 
 const GoalForm = () => {
   const [goalName, setGoalName] = useState("");
@@ -8,6 +9,7 @@ const GoalForm = () => {
   const [currentAmount, setCurrentAmount] = useState("");
   const [priority, setPriority] = useState("");
   const [dueDate, setDueDate] = useState("");
+  const { user } = useAuthContext();
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
@@ -27,6 +29,7 @@ const GoalForm = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${user.token}`,
         },
         body: JSON.stringify(goalData),
       });

@@ -1,5 +1,5 @@
 const express = require("express");
-const router = express.Router();
+
 const {
   createGoal,
   getGoal,
@@ -7,6 +7,10 @@ const {
   updateGoalById,
   deleteGoal,
 } = require("../controller/goalController");
+const requireAuth = require("../middleware/requireAuth");
+const router = express.Router();
+
+router.use(requireAuth);
 
 router.get("/", getGoals);
 router.get("/:id", getGoal);

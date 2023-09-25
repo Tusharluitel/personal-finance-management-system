@@ -1,11 +1,17 @@
 import React, { useEffect, useState } from "react";
 import DebtDetails from "./components/DebtDetails";
 import DebtForm from "./components/DebtForm";
+import { useAuthContext } from "../../hooks/useAuthContext";
 const Debt = () => {
   const [debt, setDebt] = useState("");
+  const { user } = useAuthContext();
   useEffect(() => {
     const fetchDebt = async () => {
-      const response = await fetch("http://localhost:4000/api/debt");
+      const response = await fetch("http://localhost:4000/api/debt", {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      });
       const json = await response.json();
       if (response.ok) {
         setDebt(json);

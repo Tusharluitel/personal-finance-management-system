@@ -3,7 +3,8 @@ const mongoose = require("mongoose");
 
 // GET all debt
 const getDebts = async (req, res) => {
-  const debt = await Debt.find({}).sort({ createdAt: -1 });
+  const user_id = req.user._id;
+  const debt = await Debt.find({ user_id }).sort({ createdAt: -1 });
   res.status(200).json(debt);
 };
 
@@ -25,12 +26,14 @@ const createDebt = async (req, res) => {
     req.body;
 
   try {
+    const user_id = req.user._id;
     const debt = await Debt.create({
       creditor,
       balance,
       interestRate,
       minimumPayment,
       paymentPlan,
+      user_id,
     });
 
     res.status(201).json(debt);

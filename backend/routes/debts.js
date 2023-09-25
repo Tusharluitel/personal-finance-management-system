@@ -1,5 +1,5 @@
 const express = require("express");
-const router = express.Router();
+const requireAuth = require("../middleware/requireAuth");
 const {
   createDebt,
   getDebt,
@@ -7,6 +7,10 @@ const {
   deleteDebt,
   updateDebt,
 } = require("../controller/debtController");
+
+const router = express.Router();
+
+router.use(requireAuth);
 
 router.get("/", getDebts);
 router.get("/:id", getDebt);

@@ -18,7 +18,12 @@ const budgetSchema = new Schema(
         actualExpenses: Number,
       },
     ],
+    user_id: {
+      type: String,
+      required: true,
+    },
   },
+
   { timestamps: true }
 );
 

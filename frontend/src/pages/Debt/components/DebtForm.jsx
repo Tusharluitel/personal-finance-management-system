@@ -8,6 +8,7 @@ import {
   ListItem,
   ListItemText,
 } from "@mui/material";
+import { useAuthContext } from "../../../hooks/useAuthContext";
 
 const DebtForm = () => {
   const [creditor, setCreditor] = useState("");
@@ -17,7 +18,7 @@ const DebtForm = () => {
   const [paymentPlan, setPaymentPlan] = useState([]);
   const [paymentDate, setPaymentDate] = useState("");
   const [amountPaid, setAmountPaid] = useState("");
-
+  const { user } = useAuthContext();
   const handlePaymentPlanAdd = () => {
     if (paymentDate && amountPaid) {
       const newPayment = {
@@ -51,6 +52,7 @@ const DebtForm = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${user.token}`,
         },
         body: JSON.stringify(debtData),
       });
