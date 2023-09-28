@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { useAuthContext } from "../../../hooks/useAuthContext";
+import { useGoalContext } from "../../../hooks/useGoalContext";
 
 const GoalForm = () => {
   const [goalName, setGoalName] = useState("");
@@ -10,6 +11,7 @@ const GoalForm = () => {
   const [priority, setPriority] = useState("");
   const [dueDate, setDueDate] = useState("");
   const { user } = useAuthContext();
+  const { dispatch } = useGoalContext();
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
@@ -33,7 +35,7 @@ const GoalForm = () => {
         },
         body: JSON.stringify(goalData),
       });
-
+      const json = await response.json();
       if (response.ok) {
         // Handle success
         console.log("Goal posted successfully!");
@@ -43,6 +45,7 @@ const GoalForm = () => {
         setCurrentAmount("");
         setPriority("");
         setDueDate("");
+        dispatch({ type: "CREATE_GOAL", payload: json });
       } else {
         // Handle server-side validation errors or other issues
         const responseData = await response.json();
@@ -59,8 +62,10 @@ const GoalForm = () => {
       <h2 className="text-2xl font-semibold mb-4">Create a New Goal</h2>
       <form onSubmit={handleFormSubmit}>
         <div className="mb-4">
+          <label htmlFor="goalname" className="block mb-1">
+            Goal Name:
+          </label>
           <TextField
-            label="Goal Name"
             variant="outlined"
             fullWidth
             value={goalName}
@@ -68,8 +73,10 @@ const GoalForm = () => {
           />
         </div>
         <div className="mb-4">
+          <label htmlFor="targetamount" className="block mb-1">
+            Target Amount:
+          </label>
           <TextField
-            label="Target Amount"
             variant="outlined"
             fullWidth
             type="number"
@@ -78,8 +85,10 @@ const GoalForm = () => {
           />
         </div>
         <div className="mb-4">
+          <label htmlFor="totalamount" className="block mb-1">
+            Current Amount:
+          </label>
           <TextField
-            label="Current Amount"
             variant="outlined"
             fullWidth
             type="number"
@@ -88,8 +97,10 @@ const GoalForm = () => {
           />
         </div>
         <div className="mb-4">
+          <label htmlFor="totalamount" className="block mb-1">
+            Priority
+          </label>
           <TextField
-            label="Priority"
             variant="outlined"
             fullWidth
             type="number"
@@ -98,8 +109,10 @@ const GoalForm = () => {
           />
         </div>
         <div className="mb-4">
+          <label htmlFor="totalamount" className="block mb-1">
+            Due Date
+          </label>
           <TextField
-            label="Due Date"
             variant="outlined"
             fullWidth
             type="date"
