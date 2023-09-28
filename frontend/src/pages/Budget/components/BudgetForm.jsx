@@ -9,20 +9,22 @@ import {
 } from "@mui/material";
 import "tailwindcss/tailwind.css"; // Import Tailwind CSS styles
 import { useAuthContext } from "../../../hooks/useAuthContext";
+import { useBudgetContext } from "../../../hooks/useBudgetContext";
 
 const BudgetForm = () => {
+  const { dispatch } = useBudgetContext();
   const [budgetname, setBudgetname] = useState("");
   const [totalamount, setTotalamount] = useState("");
-  const [categoryname, setCategoryname] = useState("");
+  const [categoryName, setCategoryName] = useState("");
   const [allocatedAmount, setAllocatedAmount] = useState("");
   const [actualExpenses, setActualExpenses] = useState("");
   const [categories, setCategories] = useState([]);
   const { user } = useAuthContext();
 
   const handleCategoryAdd = () => {
-    if (categoryname && allocatedAmount && actualExpenses) {
+    if (categoryName && allocatedAmount && actualExpenses) {
       const newCategory = {
-        categoryname,
+        categoryName,
         allocatedAmount,
         actualExpenses,
       };
@@ -30,7 +32,7 @@ const BudgetForm = () => {
       setCategories([...categories, newCategory]);
 
       // Clear category input fields
-      setCategoryname("");
+      setCategoryName("");
       setAllocatedAmount("");
       setActualExpenses("");
     }
@@ -57,6 +59,7 @@ const BudgetForm = () => {
         body: JSON.stringify(budgetData),
       });
 
+      const json = await response.json();
       if (response.ok) {
         // Handle success
         console.log("Budget posted successfully!");
@@ -64,6 +67,8 @@ const BudgetForm = () => {
         setBudgetname("");
         setTotalamount("");
         setCategories([]);
+
+        dispatch({ type: "CREATE_BUDGET", payload: json });
       } else {
         // Handle server-side validation errors or other issues
         const responseData = await response.json();
@@ -104,14 +109,14 @@ const BudgetForm = () => {
           />
         </div>
         <div className="mb-4">
-          <label htmlFor="categoryname" className="block mb-1">
+          <label htmlFor="categoryName" className="block mb-1">
             Category Name:
           </label>
           <TextField
             type="text"
-            id="categoryname"
-            value={categoryname}
-            onChange={(e) => setCategoryname(e.target.value)}
+            id="categoryName"
+            value={categoryName}
+            onChange={(e) => setCategoryName(e.target.value)}
             fullWidth
           />
         </div>
@@ -155,7 +160,7 @@ const BudgetForm = () => {
             {categories.map((category, index) => (
               <ListItem key={index}>
                 <ListItemText
-                  primary={`${category.categoryname} - Allocated: ${category.allocatedAmount}, Actual: ${category.actualExpenses}`}
+                  primary={`${category.categoryName} - Allocated: ${category.allocatedAmount}, Actual: ${category.actualExpenses}`}
                 />
               </ListItem>
             ))}

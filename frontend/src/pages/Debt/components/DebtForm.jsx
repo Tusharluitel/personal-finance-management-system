@@ -9,8 +9,9 @@ import {
   ListItemText,
 } from "@mui/material";
 import { useAuthContext } from "../../../hooks/useAuthContext";
-
+import { useDebtContext } from "../../../hooks/useDebtContext";
 const DebtForm = () => {
+  const { dispatch } = useDebtContext();
   const [creditor, setCreditor] = useState("");
   const [balance, setBalance] = useState("");
   const [interestRate, setInterestRate] = useState("");
@@ -57,6 +58,7 @@ const DebtForm = () => {
         body: JSON.stringify(debtData),
       });
 
+      const json = await response.json();
       if (response.ok) {
         // Handle success
         console.log("Debt posted successfully!");
@@ -66,6 +68,7 @@ const DebtForm = () => {
         setInterestRate("");
         setMinimumPayment("");
         setPaymentPlan([]);
+        dispatch({ type: "CREATE_DEBT", payload: json });
       } else {
         // Handle server-side validation errors or other issues
         const responseData = await response.json();

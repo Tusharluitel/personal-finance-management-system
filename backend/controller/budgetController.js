@@ -51,6 +51,30 @@ const deleteBudget = async (req, res) => {
   res.status(200).json(budget);
 };
 
+// UPDATE budget
+async function updateBudget(req, res) {
+  const { id } = req.params;
+  const updateData = req.body;
+
+  try {
+    const budget = await Budget.findById(id);
+
+    if (!budget) {
+      return res.status(404).json({ error: "Budget not found" });
+    }
+
+    // Update the budget properties based on the data in updateData
+    for (const prop in updateData) {
+      budget[prop] = updateData[prop];
+    }
+
+    await budget.save();
+    res.status(200).json(budget);
+  } catch (error) {
+    res.status(400).json(error);
+  }
+}
+
 // UPDATE actual expense
 const updateActualExpenses = async (req, res) => {
   const { actualExpenses } = req.body;
@@ -84,4 +108,5 @@ module.exports = {
   createBudgets,
   deleteBudget,
   updateActualExpenses,
+  updateBudget,
 };

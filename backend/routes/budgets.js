@@ -6,6 +6,7 @@ const {
   getBudgets,
   createBudgets,
   deleteBudget,
+  updateBudget,
   updateActualExpenses,
 } = require("../controller/budgetController");
 
@@ -15,6 +16,7 @@ router.use(requireAuth);
 
 router.get("/", getBudgets);
 router.get("/:id", getBudget);
+router.patch("/:id", updateBudget);
 router.post("/", createBudgets);
 router.patch("/:id/category/:categoryName", updateActualExpenses);
 router.delete("/:id", deleteBudget);

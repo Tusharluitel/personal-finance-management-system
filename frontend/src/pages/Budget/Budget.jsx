@@ -1,36 +1,45 @@
 import React, { useEffect, useState } from "react";
 import { useAuthContext } from "../../hooks/useAuthContext";
-
 import BudgetDetails from "./components/BudgetDetails";
 import BudgetForm from "./components/BudgetForm";
+import { useBudgetContext } from "../../hooks/useBudgetContext";
+
 const Budget = () => {
-  const [budgets, setBudgets] = useState("");
   const { user } = useAuthContext();
+  const { budgets, dispatch } = useBudgetContext();
+
   useEffect(() => {
     const fetchBudget = async () => {
-      const response = await fetch("http://localhost:4000/api/budget", {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      });
-      const json = await response.json();
-      if (response.ok) {
-        setBudgets(json);
-        console.log("Fetched sucessfully");
+      try {
+        const response = await fetch("http://localhost:4000/api/budget", {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        });
+        const json = await response.json();
+        if (response.ok) {
+          dispatch({ type: "SET_BUDGETS", payload: json });
+        }
+
+        console.log("Fetched successfully");
+      } catch (error) {
+        console.error("Error fetching budgets:", error);
       }
     };
-    fetchBudget();
-  }, []);
+    if (user) {
+      fetchBudget();
+    }
+  }, [dispatch, user]);
 
   return (
-    <div>
-      <div>
-        {budgets &&
+    <div className="flex">
+      <div className="w-3/4 p-4">
+        {budgets !== null &&
           budgets.map((budget) => (
             <BudgetDetails key={budget._id} budget={budget} />
           ))}
       </div>
-      <div>
+      <div className="w-2/4 p-4">
         <BudgetForm />
       </div>
     </div>
