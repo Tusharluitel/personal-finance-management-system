@@ -5,7 +5,7 @@ import { useAuthContext } from "../../hooks/useAuthContext";
 import { useGoalContext } from "../../hooks/useGoalContext";
 
 const Goal = () => {
-  const { goals, dispatch } = useGoalContext();
+  const { goals, goalDispatch } = useGoalContext();
   const { user } = useAuthContext();
 
   // Add this useEffect to re-fetch goals when the state is updated
@@ -23,7 +23,7 @@ const Goal = () => {
         }
 
         const json = await response.json();
-        dispatch({ type: "SET_GOALS", payload: json });
+        goalDispatch({ type: "SET_GOALS", payload: json });
       } catch (error) {
         console.error("Error fetching goals:", error);
       }
@@ -32,7 +32,7 @@ const Goal = () => {
     if (user) {
       fetchGoal();
     }
-  }, [dispatch, user]);
+  }, [goalDispatch, user]);
 
   return (
     <div className="flex">

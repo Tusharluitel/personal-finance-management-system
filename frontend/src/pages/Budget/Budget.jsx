@@ -6,7 +6,7 @@ import { useBudgetContext } from "../../hooks/useBudgetContext";
 
 const Budget = () => {
   const { user } = useAuthContext();
-  const { budgets, dispatch } = useBudgetContext();
+  const { budgets, budgetDispatch } = useBudgetContext();
 
   useEffect(() => {
     const fetchBudget = async () => {
@@ -18,7 +18,7 @@ const Budget = () => {
         });
         const json = await response.json();
         if (response.ok) {
-          dispatch({ type: "SET_BUDGETS", payload: json });
+          budgetDispatch({ type: "SET_BUDGETS", payload: json });
         }
 
         console.log("Fetched successfully");
@@ -29,7 +29,7 @@ const Budget = () => {
     if (user) {
       fetchBudget();
     }
-  }, [dispatch, user]);
+  }, [budgetDispatch, user]);
 
   return (
     <div className="flex">

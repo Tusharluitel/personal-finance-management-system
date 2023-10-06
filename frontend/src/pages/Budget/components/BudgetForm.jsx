@@ -12,7 +12,7 @@ import { useAuthContext } from "../../../hooks/useAuthContext";
 import { useBudgetContext } from "../../../hooks/useBudgetContext";
 
 const BudgetForm = () => {
-  const { dispatch } = useBudgetContext();
+  const { budgetDispatch } = useBudgetContext();
   const [budgetname, setBudgetname] = useState("");
   const [totalamount, setTotalamount] = useState("");
   const [categoryName, setCategoryName] = useState("");
@@ -68,7 +68,7 @@ const BudgetForm = () => {
         setTotalamount("");
         setCategories([]);
 
-        dispatch({ type: "CREATE_BUDGET", payload: json });
+        budgetDispatch({ type: "CREATE_BUDGET", payload: json });
       } else {
         // Handle server-side validation errors or other issues
         const responseData = await response.json();

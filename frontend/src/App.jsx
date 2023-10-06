@@ -8,6 +8,7 @@ import Navbar from "./components/Navbar";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import SignUp from "./pages/Signup/Signup";
 import { useAuthContext } from "./hooks/useAuthContext";
+import DebtCalculator from "./pages/Debt/components/DebtCalculator";
 function App() {
   const { user } = useAuthContext();
   return (
@@ -30,6 +31,10 @@ function App() {
           <Route
             path="/debt"
             element={user ? <Debt /> : <Navigate to="/login" />}
+          />
+          <Route
+            path="/debt-calculator"
+            element={user ? <DebtCalculator /> : <Navigate to="/login" />}
           />
           <Route
             path="/login"
