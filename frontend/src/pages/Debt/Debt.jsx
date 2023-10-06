@@ -3,9 +3,10 @@ import DebtDetails from "./components/DebtDetails";
 import DebtForm from "./components/DebtForm";
 import { useAuthContext } from "../../hooks/useAuthContext";
 import { useDebtContext } from "../../hooks/useDebtContext";
+import DebtCalculator from "./components/DebtCalculator";
 
 const Debt = () => {
-  const { debts, dispatch } = useDebtContext();
+  const { debts, debtDispatch } = useDebtContext();
   const { user } = useAuthContext();
 
   useEffect(() => {
@@ -20,7 +21,7 @@ const Debt = () => {
         const json = await response.json();
         if (response.ok) {
           if (response.ok) {
-            dispatch({ type: "SET_DEBTS", payload: json });
+            debtDispatch({ type: "SET_DEBTS", payload: json });
           }
         }
 
@@ -31,7 +32,7 @@ const Debt = () => {
     };
 
     fetchDebt();
-  }, [dispatch, user]);
+  }, [debtDispatch, user]);
 
   return (
     <div className="flex">
@@ -42,6 +43,7 @@ const Debt = () => {
       <div className="w-2/4 p-4">
         <DebtForm />
       </div>
+      <DebtCalculator />
     </div>
   );
 };

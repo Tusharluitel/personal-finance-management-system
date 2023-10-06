@@ -30,12 +30,12 @@ export const goalReducer = (state, action) => {
 };
 
 export const GoalContextProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(goalReducer, {
+  const [state, goalDispatch] = useReducer(goalReducer, {
     goals: null,
   });
 
   return (
-    <GoalContext.Provider value={{ ...state, dispatch }}>
+    <GoalContext.Provider value={{ ...state, goalDispatch }}>
       {children}
     </GoalContext.Provider>
   );

@@ -11,7 +11,7 @@ const GoalForm = () => {
   const [priority, setPriority] = useState("");
   const [dueDate, setDueDate] = useState("");
   const { user } = useAuthContext();
-  const { dispatch } = useGoalContext();
+  const { goalDispatch } = useGoalContext();
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
@@ -45,7 +45,7 @@ const GoalForm = () => {
         setCurrentAmount("");
         setPriority("");
         setDueDate("");
-        dispatch({ type: "CREATE_GOAL", payload: json });
+        goalDispatch({ type: "CREATE_GOAL", payload: json });
       } else {
         // Handle server-side validation errors or other issues
         const responseData = await response.json();

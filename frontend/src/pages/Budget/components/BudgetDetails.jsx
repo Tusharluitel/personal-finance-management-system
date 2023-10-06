@@ -15,7 +15,7 @@ import EditBudgetForm from "./EditBudgetForm";
 
 const BudgetDetails = ({ budget }) => {
   const { user } = useAuthContext();
-  const { dispatch } = useBudgetContext();
+  const { budgetDispatch } = useBudgetContext();
   const [isEditing, setIsEditing] = useState(false);
 
   const handleEditClick = () => {
@@ -25,7 +25,7 @@ const BudgetDetails = ({ budget }) => {
   const handleSave = (updatedBudget) => {
     setIsEditing(false);
 
-    dispatch({ type: "UPDATE_BUDGET", payload: updatedBudget });
+    budgetDispatch({ type: "UPDATE_BUDGET", payload: updatedBudget });
   };
 
   const handleClick = async () => {
@@ -44,7 +44,7 @@ const BudgetDetails = ({ budget }) => {
     console.log(response.json());
     const json = await response.json();
     if (response.ok) {
-      dispatch({ type: "DELETE_BUDGET", payload: json });
+      budgetDispatch({ type: "DELETE_BUDGET", payload: json });
     }
   };
 

@@ -8,7 +8,7 @@ import EditGoalForm from "./EditGoalForm";
 
 const GoalDetails = ({ goals }) => {
   const { user } = useAuthContext();
-  const { dispatch } = useGoalContext();
+  const { goalDispatch } = useGoalContext();
   const [isEditing, setIsEditing] = useState(false);
 
   const handleClick = async () => {
@@ -27,7 +27,7 @@ const GoalDetails = ({ goals }) => {
 
     const json = await response.json();
     if (response.ok) {
-      dispatch({ type: "DELETE_GOAL", payload: json });
+      goalDispatch({ type: "DELETE_GOAL", payload: json });
     }
   };
 
@@ -37,7 +37,7 @@ const GoalDetails = ({ goals }) => {
 
   const handleSave = (updatedGoal) => {
     setIsEditing(false);
-    dispatch({ type: "UPDATE_GOAL", payload: updatedGoal });
+    goalDispatch({ type: "UPDATE_GOAL", payload: updatedGoal });
   };
 
   return (

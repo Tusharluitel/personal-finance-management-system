@@ -15,7 +15,7 @@ import EditDebtForm from "./EditDebtForm";
 
 const DebtDetails = ({ debt }) => {
   const { user } = useAuthContext();
-  const { dispatch } = useDebtContext();
+  const { debtDispatch } = useDebtContext();
   const [isEditing, setIsEditing] = useState(false);
 
   const handleClick = async () => {
@@ -30,7 +30,7 @@ const DebtDetails = ({ debt }) => {
     });
     const json = await response.json();
     if (response.ok) {
-      dispatch({ type: "DELETE_DEBT", payload: json });
+      debtDispatch({ type: "DELETE_DEBT", payload: json });
     }
   };
 
@@ -40,7 +40,7 @@ const DebtDetails = ({ debt }) => {
 
   const handleSave = (updatedBudget) => {
     setIsEditing(false);
-    dispatch({ type: "UPDATE_DEBT", payload: updatedBudget });
+    debtDispatch({ type: "UPDATE_DEBT", payload: updatedBudget });
   };
 
   return (

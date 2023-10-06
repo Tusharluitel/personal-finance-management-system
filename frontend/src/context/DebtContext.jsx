@@ -30,12 +30,12 @@ export const debtReducer = (state, action) => {
 };
 
 export const DebtContextProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(debtReducer, {
+  const [state, debtDispatch] = useReducer(debtReducer, {
     debts: null,
   });
 
   return (
-    <DebtContext.Provider value={{ ...state, dispatch }}>
+    <DebtContext.Provider value={{ ...state, debtDispatch }}>
       {children}
     </DebtContext.Provider>
   );

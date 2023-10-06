@@ -30,12 +30,12 @@ export const budgetReducer = (state, action) => {
 };
 
 export const BudgetContextProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(budgetReducer, {
+  const [state, budgetDispatch] = useReducer(budgetReducer, {
     budgets: null,
   });
 
   return (
-    <BudgetContext.Provider value={{ ...state, dispatch }}>
+    <BudgetContext.Provider value={{ ...state, budgetDispatch }}>
       {children}
     </BudgetContext.Provider>
   );
